@@ -31,9 +31,46 @@ function playRound(playerSelection, computerSelection) {
     } else {
         return "I don't know what you entered"
     }
-}
+};
 
-function game() {
+const buttons = document.querySelectorAll('#btn');
+const scoreDiv = document.querySelector('.score');
+
+let playerScore = 0;
+let computerScore = 0;
+
+buttons.forEach((button) => {
+    button.addEventListener('click', function (e) {
+        let playerInput = e.target.classList.value;
+        let computerInput = computerPlay();
+        switch (playRound(playerInput, computerInput).charAt(4)) {
+            case "w":
+                playerScore++
+                console.log("Player won")
+                break;
+            case "l":
+                computerScore++
+                console.log("Computer won")
+                break
+            case " ":
+                console.log("Tie")
+                break;
+            case "n":
+                console.log("Invalid input, no winner")
+                break;   
+        };
+        scoreDiv.textContent = `comp ${computerScore}-${playerScore} u`;
+        if (playerScore === 5 || computerScore === 5) {
+            buttons.forEach((btn) => btn.disabled = true);
+            playerScore === 5 ? alert("playr won") : alert("computr won");
+        };
+    });
+});
+
+
+
+
+/* function game() {
     let playerScore = 0;
     let computerScore = 0;
     for (i=0; i<5; i++) {
@@ -60,4 +97,4 @@ function game() {
     }
     return (playerScore>computerScore ? "Player wins game!" :
     playerScore === computerScore ? "Game is tied!" : "Computer wins game!");
-}
+} */
